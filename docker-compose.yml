@@ -1,0 +1,35 @@
+version: '3.8'
+
+services: 
+  node_backend:
+    container_name: foodrecipiesapi
+    image: foodrecipiesapi:0.0.4
+    build: 
+      context: .
+    ports:
+      - "3001:3001"
+    environment: 
+      - EXTERNAL_PORT=3001
+      - PGDATABASE=kay_db
+      - PGUSER=kishan
+      - PGPASSWORD=12345
+      - PGHOST=foodrecipies_db
+    depends_on: 
+      - foodrecipies_db
+  foodrecipies_db: 
+    container_name: foodrecipies_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment: 
+      - POSTGRES_USER=kishan
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=kay_db
+    volumes:
+      - nps_data:/var/lib/postgresql/data
+
+volumes:
+  nps_data: {}
+
+  
+    
